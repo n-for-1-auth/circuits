@@ -410,8 +410,9 @@ void hkdf_expand(block *key, int key_len, block *info, int info_len, block *outp
 	block cur_T[256];
 	int cur_T_len = 0;
 
+        auto input = new block[cur_T_len + info_len + 8];
+        
 	for (int i = 1; i <= N; i++) {
-		auto input = new block[cur_T_len + info_len + 8];
 		for (int j = 0; j < cur_T_len; j++) {
 			input[j] = cur_T[j];
 		}
@@ -441,6 +442,8 @@ void hkdf_expand(block *key, int key_len, block *info, int info_len, block *outp
 			}
 		}
 	}
+        
+        delete[] input; 
 }
 
 void hkdf_expand_label(block *key, int key_len, const char *label, block *context, int context_len, block *output,
